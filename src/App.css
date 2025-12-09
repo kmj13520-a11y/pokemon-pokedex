@@ -1,0 +1,321 @@
+/* src/App.css */
+
+/* ===== 전체 레이아웃: 고대 지도 + 종이 질감 ===== */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at top left, #f5e4c6 0, transparent 55%),
+    radial-gradient(circle at bottom right, #d5e4de 0, transparent 55%), #e8ddc9;
+  color: #222;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+/* ===== 로딩 화면 (고대 도감 여는 중 느낌) ===== */
+.app-loading {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  color: #4b4b3f;
+}
+
+.pokeball {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff7e3, #b36a3c);
+  border: 3px solid #3a2a1c;
+  position: relative;
+  animation: spin 1s ease-in-out infinite;
+}
+
+.pokeball::before {
+  content: "";
+  position: absolute;
+  inset: 46% 0;
+  border-top: 3px solid #3a2a1c;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+/* ===== 헤더: 나무 간판 + 두루마리 느낌 ===== */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 10px 28px 12px;
+  background: linear-gradient(to bottom, #876147, #5f4734);
+  border-bottom: 4px solid #2b1d15;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 10px 20px rgba(20, 15, 10, 0.5);
+}
+
+.app-header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* 로고: 도감 책 표지 느낌 */
+.app-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.app-logo-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, #fff4d6, #c78552);
+  border: 3px solid #2b1d15;
+  position: relative;
+}
+
+.app-logo-icon::before {
+  content: "";
+  position: absolute;
+  inset: 42% 0;
+  border-top: 3px solid #2b1d15;
+}
+
+.app-logo-text {
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #fdf5e6;
+  text-transform: uppercase;
+  font-size: 14px;
+  text-shadow: 0 2px 0 rgba(20, 15, 10, 0.7);
+}
+
+/* ===== 네비게이션: 두루마리 탭 ===== */
+.app-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(250, 245, 230, 0.1);
+  border: 1px solid rgba(17, 24, 39, 0.3);
+}
+
+.app-nav-link {
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  color: #f5e9d0;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease,
+    box-shadow 0.15s ease;
+}
+
+.app-nav-link:hover {
+  background: rgba(250, 245, 230, 0.24);
+  color: #fffdf3;
+  transform: translateY(-1px);
+}
+
+.app-nav-link.active {
+  background: #f5e8d1;
+  color: #4b3826;
+  box-shadow: 0 3px 10px rgba(18, 12, 8, 0.5);
+}
+
+/* ===== 헤더 오른쪽: 트레이너 인장 ===== */
+.app-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.trainer-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: rgba(249, 241, 222, 0.2);
+  border: 1px solid rgba(249, 241, 222, 0.7);
+  font-size: 12px;
+  color: #fdf5e1;
+}
+
+.trainer-label {
+  font-weight: 600;
+  margin-right: 6px;
+  color: #fbbf77;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.trainer-name {
+  font-weight: 700;
+}
+
+/* ===== 공통 버튼: 봉인 스탬프/두루마리 느낌 ===== */
+.btn {
+  padding: 7px 15px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease,
+    transform 0.1s ease, border-color 0.15s ease;
+}
+
+/* 붉은 봉인 스탬프 느낌 */
+.btn-primary {
+  background: linear-gradient(135deg, #b5473d, #d37545);
+  color: #fdf5e6;
+  box-shadow: 0 3px 10px rgba(33, 24, 18, 0.7);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(33, 24, 18, 0.9);
+}
+
+/* 종이 위에 잉크 버튼 */
+.btn-outline {
+  background: rgba(252, 246, 232, 0.96);
+  color: #7a3f27;
+  border-color: #e0b899;
+}
+
+.btn-outline:hover {
+  background: #f8e7cd;
+}
+
+/* 잉크 텍스트 버튼 */
+.btn-ghost {
+  background: transparent;
+  color: #fef3dc;
+}
+
+.btn-ghost:hover {
+  background: rgba(250, 245, 230, 0.2);
+}
+
+/* ===== 메인 & 풋터: 지도 위에 펼쳐진 도감 ===== */
+.app-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 26px 16px 38px;
+}
+
+.app-main-inner {
+  width: 100%;
+  max-width: 1180px;
+  background: #f7f0df;
+  border-radius: 24px;
+  padding: 26px 24px 30px;
+  box-shadow: 0 14px 0 #d1c1a3, 0 28px 40px rgba(53, 44, 33, 0.4);
+  border: 1px solid #d0c2a4;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 얇은 종이 결 / 지도 선 느낌 */
+.app-main-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    rgba(120, 94, 54, 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 100% 28px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* 모서리 살짝 닳은 느낌 */
+.app-main-inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      circle at top left,
+      rgba(0, 0, 0, 0.05),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(0, 0, 0, 0.06),
+      transparent 55%
+    );
+  pointer-events: none;
+}
+
+/* 상단 여백 */
+.app-main-inner > section:first-child,
+.app-main-inner > div:first-child {
+  margin-top: 4px;
+}
+
+/* 푸터: 기록 하단 여백 느낌 */
+.app-footer {
+  padding: 14px 16px 18px;
+  text-align: center;
+  font-size: 12px;
+  color: #4b4032;
+  background: #c0b092;
+  border-top: 3px solid #2b1d15;
+  box-shadow: 0 -8px 16px rgba(20, 15, 10, 0.7);
+}
+
+.app-footer p {
+  color: #fdf5e4;
+}
+
+/* ===== 반응형 ===== */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 16px 12px;
+  }
+
+  .app-header-left {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .app-nav {
+    margin-top: 4px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .app-main {
+    padding: 20px 10px 28px;
+  }
+
+  .app-main-inner {
+    padding: 20px 14px 24px;
+    border-radius: 20px;
+  }
+}

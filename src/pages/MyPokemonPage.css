@@ -1,0 +1,94 @@
+.my-pokemon {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.my-title {
+  font-size: 22px;
+  color: #2b2418;
+}
+
+.my-subtitle {
+  font-size: 13px;
+  color: #5b4a34;
+  margin-bottom: 8px;
+}
+
+.my-empty {
+  font-size: 14px;
+  color: #5b4a34;
+  margin: 14px 0;
+}
+
+/* 그리드 */
+.my-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+}
+
+.my-card {
+  border-radius: 16px;
+  background: #f8f1e1;
+  border: 1px solid #d2c4a5;
+  box-shadow: 0 6px 14px rgba(53, 44, 33, 0.35);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.my-card-main {
+  text-decoration: none;
+  color: inherit;
+}
+
+.my-card-image-wrap {
+  background: radial-gradient(circle at 30% 20%, #ffffff, transparent 45%),
+    radial-gradient(circle at 70% 80%, #f1d9b0, #f2c27e);
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-card-image {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.my-card-info {
+  margin-top: 6px;
+}
+
+.my-id {
+  font-size: 11px;
+  color: #8c7a5d;
+}
+
+.my-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2b2418;
+}
+
+.my-subname {
+  font-size: 11px;
+  color: #7e6b4e;
+}
+
+.my-types {
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.my-remove-btn {
+  margin-top: 4px;
+  font-size: 12px;
+  width: 100%;
+}

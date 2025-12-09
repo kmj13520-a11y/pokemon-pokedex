@@ -1,0 +1,304 @@
+/* src/pages/PokemonDetailPage.css */
+
+.pokemon-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* 로딩 상태 */
+.pokemon-detail.loading {
+  padding: 20px;
+  font-size: 14px;
+  color: #4b4032;
+}
+
+/* 헤더 영역 */
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.detail-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8c5b33;
+  margin-bottom: 4px;
+}
+
+.detail-title {
+  font-size: 22px;
+  line-height: 1.4;
+  color: #2b2418;
+}
+
+.detail-subname {
+  font-size: 14px;
+  color: #7e6b4e;
+}
+
+.detail-id-text {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #5b4a34;
+}
+
+.detail-back-btn {
+  font-size: 12px;
+}
+
+/* 전체 레이아웃 */
+.detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr);
+  gap: 18px;
+}
+
+/* 왼쪽 영역 */
+.detail-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 아트 카드 */
+.detail-art-card {
+  border-radius: 18px;
+  background: #f8f1e1;
+  border: 1px solid #d2c4a5;
+  box-shadow: 0 8px 20px rgba(53, 44, 33, 0.35);
+  padding: 10px;
+}
+
+.detail-art-inner {
+  border-radius: 14px;
+  background: radial-gradient(circle at 30% 20%, #ffffff, transparent 45%),
+    radial-gradient(circle at 70% 80%, #f1d9b0, #f2c27e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+.detail-art-image {
+  width: 170px;
+  height: 170px;
+  object-fit: contain;
+}
+
+/* 기본 정보 카드 */
+.detail-basic-card {
+  border-radius: 16px;
+  background: #f8f2e2;
+  border: 1px solid #d4c3a6;
+  box-shadow: 0 6px 16px rgba(53, 44, 33, 0.3);
+  padding: 12px 14px 12px;
+}
+
+.detail-section-title {
+  font-size: 15px;
+  margin-bottom: 8px;
+  color: #2b2418;
+  border-bottom: 1px solid #d4c3a6;
+  padding-bottom: 4px;
+}
+
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.detail-label {
+  color: #8c7a5d;
+  min-width: 52px;
+}
+
+.detail-value {
+  color: #2b2418;
+}
+
+.detail-type-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.detail-ability-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-ability {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #3a2f20;
+}
+
+.ability-tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #e4d0af;
+  color: #4b3826;
+}
+
+/* 타입 배지 예시 (원하면 추가로 색 더 입혀도 됨) */
+.type-badge {
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  background: #e3d6bf;
+  color: #3a2f20;
+}
+
+/* 오른쪽 영역 */
+.detail-right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 능력치 카드 */
+.detail-stats-card {
+  border-radius: 16px;
+  background: #f8f2e2;
+  border: 1px solid #d4c3a6;
+  box-shadow: 0 6px 16px rgba(53, 44, 33, 0.3);
+  padding: 12px 14px;
+}
+
+.detail-stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-label-wrap {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.stat-name {
+  color: #2b2418;
+}
+
+.stat-value {
+  color: #5b4a34;
+}
+
+/* 능력치 그래프 막대 */
+/* 기본 그래프 바 바탕 */
+.stat-bar {
+  width: 100%;
+  height: 8px;
+  background: #e4d7c3;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+/* 기본 그래프 바 */
+.stat-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* ⭐ 능력치별 색상 구분 */
+
+/* HP — 붉은색 계열 */
+.stat-hp .stat-bar-fill {
+  background: linear-gradient(90deg, #c62828, #ef5350);
+}
+
+/* 공격 (Attack) — 오렌지 계열 */
+.stat-attack .stat-bar-fill {
+  background: linear-gradient(90deg, #e65100, #ff8f00);
+}
+
+/* 방어 (Defense) — 황토/흙색 계열 */
+.stat-defense .stat-bar-fill {
+  background: linear-gradient(90deg, #8d6e63, #a1887f);
+}
+
+/* 특수공격 (Special Attack) — 파란색 계열 */
+.stat-special-attack .stat-bar-fill {
+  background: linear-gradient(90deg, #1565c0, #42a5f5);
+}
+
+/* 특수방어 (Special Defense) — 초록색 계열 */
+.stat-special-defense .stat-bar-fill {
+  background: linear-gradient(90deg, #2e7d32, #66bb6a);
+}
+
+/* 스피드 (Speed) — 노란색 계열 (빠른 느낌) */
+.stat-speed .stat-bar-fill {
+  background: linear-gradient(90deg, #f9a825, #ffd54f);
+}
+
+/* 하단 메모 카드 */
+.detail-note-card {
+  border-radius: 16px;
+  background: #f8f2e2;
+  border: 1px solid #d4c3a6;
+  box-shadow: 0 4px 10px rgba(53, 44, 33, 0.25);
+  padding: 10px 12px;
+}
+
+.detail-note-text {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #5b4a34;
+}
+
+/* 반응형 */
+@media (max-width: 900px) {
+  .detail-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .detail-title {
+    font-size: 18px;
+  }
+
+  .detail-art-image {
+    width: 140px;
+    height: 140px;
+  }
+}
+/* PokemonDetailPage.css에 추가 */
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.detail-header-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.detail-my-btn {
+  font-size: 12px;
+}

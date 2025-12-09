@@ -1,0 +1,448 @@
+/* src/pages/Home.css */
+
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+  position: relative;
+}
+
+/* 전체 배경에 약한 빛 번짐 */
+.home::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    circle at top,
+    rgba(255, 255, 240, 0.5),
+    transparent 55%
+  );
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* === 상단: 탐험 일지 + 지도(히어로 섹션) === */
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+  gap: 28px;
+  align-items: center;
+  padding: 24px 22px;
+  border-radius: 20px;
+  background: #f7f0df;
+  border: 1px solid #d1c5aa;
+  box-shadow: 0 10px 28px rgba(53, 44, 33, 0.35);
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* 살짝 뜬 카드 느낌 */
+.home-hero:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(53, 44, 33, 0.45);
+}
+
+/* 가장자리 살짝 찢어진 종이 느낌 */
+.home-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    rgba(120, 94, 54, 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 100% 26px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.home-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      circle at top left,
+      rgba(0, 0, 0, 0.04),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(0, 0, 0, 0.05),
+      transparent 55%
+    );
+  pointer-events: none;
+}
+
+.home-hero-text {
+  position: relative;
+  z-index: 1;
+  max-width: 580px;
+}
+
+/* 상단 작은 태그 */
+.home-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8c5b33;
+  margin-bottom: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 전세대 뱃지 느낌 */
+.home-eyebrow::after {
+  content: "ALL GEN 1–9";
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(140, 91, 51, 0.3);
+  background: rgba(255, 248, 232, 0.8);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: #5c3a21;
+}
+
+.home-title {
+  font-size: 32px;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  color: #2b2418;
+}
+
+/* 제목 밑줄 디테일 */
+.home-title::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 3px;
+  border-radius: 999px;
+  margin-top: 6px;
+  background: linear-gradient(90deg, #c5914f, #e0b66b);
+}
+
+.home-description {
+  font-size: 15px;
+  line-height: 1.9;
+  margin-bottom: 18px;
+  color: #4b4031;
+}
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+/* 메인 버튼 강조용 (선택사항: .home-main-btn 있을 때) */
+.home-main-btn {
+  box-shadow: 0 10px 20px rgba(120, 79, 34, 0.4);
+  border-radius: 999px;
+  padding-inline: 18px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* 요약 리스트 */
+.home-summary-list {
+  list-style: none;
+  font-size: 13px;
+  color: #5b4a34;
+  line-height: 1.7;
+  padding-left: 0;
+}
+
+.home-summary-list li {
+  position: relative;
+  padding-left: 12px;
+}
+
+.home-summary-list li::before {
+  content: "★";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 8px;
+  color: #c28b46;
+  transform: translateY(4px);
+}
+
+/* === 오른쪽: 지도/도감 프레임 === */
+.home-hero-visual {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 옆에 떠다니는 작은 장식 원 */
+.home-hero-visual::after {
+  content: "";
+  position: absolute;
+  top: -18px;
+  right: -10px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px dashed rgba(138, 100, 60, 0.4);
+  opacity: 0.65;
+}
+
+/* 도감 프레임 */
+.home-pokedex-frame {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 18px;
+  background: #f4ebd9;
+  border: 1px solid #c9b796;
+  box-shadow: 0 10px 24px rgba(53, 44, 33, 0.5);
+  overflow: hidden;
+  position: relative;
+}
+
+/* 프레임 위 highlight */
+.home-pokedex-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.55),
+    transparent 50%,
+    rgba(255, 255, 255, 0.18)
+  );
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+/* 상단 바: 장치/도감 UI */
+.home-pokedex-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 9px;
+  background: linear-gradient(to right, #c9a676, #b08856);
+  border-bottom: 1px solid #8d6b42;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(31, 24, 15, 0.35);
+}
+
+.dot.red {
+  background: #b5473d;
+}
+
+.dot.yellow {
+  background: #e9b95f;
+}
+
+.dot.green {
+  background: #6c9c73;
+}
+
+.header-title {
+  font-size: 11px;
+  color: #fdf5e6;
+  margin-left: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+/* 도감 내부 본문 */
+.home-pokedex-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 10px;
+  padding: 10px 12px 12px;
+}
+
+.home-pokedex-main {
+  background: radial-gradient(circle at top, #fbf3dd, #f6e2b7);
+  border-radius: 14px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* 포켓몬 칩 */
+.home-pokemon-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(43, 36, 24, 0.12);
+  font-size: 11px;
+  font-weight: 600;
+  color: #3a2f20;
+  gap: 6px;
+}
+
+/* 오른쪽에 세대 태그 */
+.home-pokemon-chip::after {
+  content: "GEN 1";
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(244, 236, 210, 0.9);
+  border: 1px solid rgba(168, 135, 85, 0.6);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+/* 포켓몬 이미지 영역 */
+.home-pokemon-image {
+  flex: 1;
+  border-radius: 10px;
+  background: radial-gradient(circle at 30% 20%, #ffffff, transparent 40%),
+    radial-gradient(circle at 70% 80%, #f1d9b0, #f2c27e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* 작은 빛나는 링 */
+.home-pokemon-image::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border-radius: 12px;
+  border: 1px dashed rgba(163, 120, 69, 0.4);
+  pointer-events: none;
+}
+
+.home-pokemon-image .emoji {
+  font-size: 54px;
+}
+
+/* 오른쪽 정보 영역 */
+.home-pokedex-side {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  color: #4b4031;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.info-row .label {
+  color: #8c7a5d;
+}
+
+.info-row .value {
+  font-weight: 600;
+}
+
+.home-api-link {
+  margin-top: 6px;
+  display: inline-flex;
+  font-size: 11px;
+  color: #865c38;
+  text-decoration: none;
+  align-items: center;
+  gap: 4px;
+}
+
+.home-api-link::after {
+  content: "↗";
+  font-size: 10px;
+}
+
+.home-api-link:hover {
+  text-decoration: underline;
+}
+
+/* === 하단: 3열 소개 카드 - 탐험 기록 소계 === */
+.home-sections {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.home-section-card {
+  padding: 14px 16px 14px;
+  border-radius: 16px;
+  background: #f8f2e2;
+  border: 1px solid #d4c3a6;
+  box-shadow: 0 8px 20px rgba(53, 44, 33, 0.25);
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+/* 카드 hover 효과 */
+.home-section-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(53, 44, 33, 0.35);
+  border-color: #c9b184;
+}
+
+/* 카드 상단 얇은 색 띠 */
+.home-section-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12px;
+  right: 12px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #c5914f, #e0b66b);
+  opacity: 0.7;
+}
+
+.home-section-card h2 {
+  font-size: 17px;
+  margin-bottom: 6px;
+  color: #2b2418;
+}
+
+.home-section-card p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #5b4a34;
+}
+
+/* === 반응형 === */
+@media (max-width: 960px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero-visual {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .home {
+    gap: 24px;
+  }
+
+  .home-hero {
+    padding: 18px 16px;
+  }
+
+  .home-title {
+    font-size: 26px;
+  }
+
+  .home-sections {
+    grid-template-columns: 1fr;
+  }
+}

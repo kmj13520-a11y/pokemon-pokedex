@@ -1,0 +1,29 @@
+/* src/components/pokemon/GenerationButtons.css */
+.gen-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
+.gen-button {
+  border: none;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: #e5e7eb;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.gen-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.gen-button--active {
+  background: #10b981;
+  color: white;
+  font-weight: 600;
+}
