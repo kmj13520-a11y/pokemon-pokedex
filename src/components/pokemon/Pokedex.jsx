@@ -1,10 +1,11 @@
 // src/components/pokemon/Pokedex.jsx
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { fetchGeneration } from "../../api/pokemon";
 import GenerationButtons from "./GenerationButtons";
 import { Link } from "react-router-dom";
 import "./Pokedex.css";
+import { useFavorites } from "../../context/FavoritesContext";
+import { useTeam } from "../../context/TeamContext";
 
 // 🔹 세대 정보
 const GEN_INFO = {
@@ -19,64 +20,72 @@ const GEN_INFO = {
   9: "9세대 · 팔데아",
 };
 
+// 한 페이지에 보여줄 카드 수
+const PAGE_SIZE = 24;
+
 export default function Pokedex() {
-  const [currentGen, setCurrentGen] = useState(1); // 기본 1세대
-  const [pokemons, setPokemons] = useState([]); // ⭐ 세대별 포켓몬 리스트
+  const [currentGen, setCurrentGen] = useState(1);
+  const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // 세대가 바뀔 때마다 API 호출
+  // ⭐ 페이징 상태
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // ⭐ 즐겨찾기 기능
+  const { toggleFavorite, isFavorite } = useFavorites();
+
+  // ⭐ 팀 기능
+  const { addToTeam, removeFromTeam, isInTeam } = useTeam();
+
+  // 세대 변경 시 API 호출
   useEffect(() => {
     let ignore = false;
 
     async function load() {
       setLoading(true);
       setError(null);
+      setCurrentPage(1); // 🔹 세대 바뀔 때 페이지를 항상 1페이지로 리셋
 
       try {
-        // 1) 백엔드에서 세대별 포켓몬 기본 데이터 가져오기
-        const data = await fetchGeneration(currentGen); // [{ id, name_en, image, types? }, ...]
+        const data = await fetchGeneration(currentGen);
 
         if (ignore || !Array.isArray(data)) {
           if (!ignore) setPokemons([]);
           return;
         }
 
-        // 2) PokeAPI에서 한글 이름 가져오기 (상세페이지에서 하던 방식과 동일한 로직)
+        // 한글 이름 붙이기
         const withKoreanNames = await Promise.all(
           data.map(async (p) => {
             try {
-              const pokemonId = p.id;
-
-              // species 엔드포인트에서 ko 이름 찾기
-              const speciesRes = await axios.get(
-                `https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`
+              const res = await fetch(
+                `https://pokeapi.co/api/v2/pokemon-species/${p.id}`
               );
-              const nameKO =
-                speciesRes.data.names.find((n) => n.language.name === "ko")
-                  ?.name ??
-                p.name_en ??
+              if (!res.ok) throw new Error("species 요청 실패");
+              const species = await res.json();
+
+              const nameKo =
+                species.names.find((n) => n.language.name === "ko")?.name ??
                 p.name;
 
               return {
                 ...p,
-                nameKo: nameKO, // 내 포켓몬 카드와 맞추기
-                nameEn: p.name_en || p.name || "", // 영어 이름도 같이 저장
+                nameKo,
+                nameEn: p.name,
               };
             } catch (e) {
               console.error("한글 이름 로딩 실패:", e);
               return {
                 ...p,
-                nameKo: p.name_en || p.name || "이름 없음",
-                nameEn: p.name_en || p.name || "",
+                nameKo: p.name,
+                nameEn: p.name,
               };
             }
           })
         );
 
-        if (!ignore) {
-          setPokemons(withKoreanNames);
-        }
+        if (!ignore) setPokemons(withKoreanNames);
       } catch (err) {
         console.error(err);
         if (!ignore) {
@@ -84,18 +93,37 @@ export default function Pokedex() {
           setPokemons([]);
         }
       } finally {
-        if (!ignore) {
-          setLoading(false);
-        }
+        if (!ignore) setLoading(false);
       }
     }
 
     load();
-
     return () => {
       ignore = true;
     };
   }, [currentGen]);
+
+  // 🔢 페이징 계산
+  const totalCount = pokemons.length;
+  const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
+  const clampedPage = Math.min(currentPage, totalPages);
+  const startIndex = (clampedPage - 1) * PAGE_SIZE;
+  const pageItems = pokemons.slice(startIndex, startIndex + PAGE_SIZE);
+
+  const goToPage = (page) => {
+    const next = Math.min(Math.max(1, page), totalPages);
+    setCurrentPage(next);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // 페이지 번호 리스트 (현재 페이지 기준 ±2)
+  const getPageNumbers = () => {
+    const pages = [];
+    const start = Math.max(1, clampedPage - 2);
+    const end = Math.min(totalPages, clampedPage + 2);
+    for (let p = start; p <= end; p++) pages.push(p);
+    return pages;
+  };
 
   return (
     <section className="pokedex">
@@ -108,31 +136,73 @@ export default function Pokedex() {
         </p>
       </header>
 
-      {/* 세대 선택 버튼 영역 */}
       <GenerationButtons currentGen={currentGen} onChange={setCurrentGen} />
 
-      {/* 상태 표시 */}
       {loading && <p className="pokedex-status">불러오는 중...</p>}
       {error && <p className="pokedex-status error">{error}</p>}
 
-      {/* 포켓몬 리스트 */}
       <div className="my-grid">
-        {!loading && !error && pokemons.length === 0 && (
-          <p className="pokedex-status">
-            이 세대에는 아직 포켓몬 데이터가 없습니다.
-          </p>
+        {!loading && !error && pageItems.length === 0 && (
+          <p className="pokedex-status">이 세대의 포켓몬 데이터가 없습니다.</p>
         )}
 
         {!loading &&
           !error &&
-          pokemons.map((p) => {
+          pageItems.map((p) => {
             const image = p.image || p.sprite || "";
-            const nameKo = p.nameKo || p.name_kr || p.nameEn || p.name_en;
-            const nameEn = p.nameEn || p.name_en || p.name || "";
+            const nameKo = p.nameKo || p.nameEn;
+            const nameEn = p.nameEn;
             const types = Array.isArray(p.types) ? p.types : [];
+
+            // ⭐ 즐겨찾기 상태
+            const isFav = isFavorite(p.id);
+
+            // 🔥 팀 상태
+            const inTeam = isInTeam(p.id);
+
+            // 로컬 저장에 넣을 최소 데이터
+            const cleanData = {
+              id: p.id,
+              nameKo,
+              nameEn,
+              image,
+              types,
+            };
 
             return (
               <div key={p.id} className="my-card">
+                {/* ⭐ 즐겨찾기 버튼 */}
+                <button
+                  className={`favorite-btn ${isFav ? "active" : ""}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleFavorite(cleanData);
+                  }}
+                >
+                  {isFav ? "★" : "☆"}
+                </button>
+
+                {/* 🔥 팀 추가/제거 버튼 */}
+                <button
+                  className={`team-btn ${inTeam ? "in-team" : ""}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (inTeam) {
+                      removeFromTeam(p.id);
+                    } else {
+                      const ok = addToTeam(cleanData);
+                      if (!ok) {
+                        alert("팀은 최대 6마리까지 가능합니다!");
+                      }
+                    }
+                  }}
+                >
+                  {inTeam ? "✓ 팀 구성됨" : "+ 팀 추가"}
+                </button>
+
+                {/* 카드 전체 링크 */}
                 <Link to={`/pokemon/${p.id}`} className="my-card-main">
                   <div className="my-card-image-wrap">
                     {image ? (
@@ -148,9 +218,9 @@ export default function Pokedex() {
 
                   <div className="my-card-info">
                     <p className="my-id">No.{String(p.id).padStart(3, "0")}</p>
+
                     <h3 className="my-name">
-                      {nameKo}{" "}
-                      {nameEn && <span className="my-subname">({nameEn})</span>} 
+                      {nameKo} {nameEn && <span className="my-subname"></span>}
                     </h3>
 
                     <div className="my-types">
@@ -166,6 +236,55 @@ export default function Pokedex() {
             );
           })}
       </div>
+
+      {/* 🔻 페이지네이션 영역 */}
+      {!loading && !error && totalPages > 1 && (
+        <div className="pagination">
+          <button
+            className="page-btn"
+            onClick={() => goToPage(1)}
+            disabled={clampedPage === 1}
+          >
+            « 처음
+          </button>
+          <button
+            className="page-btn"
+            onClick={() => goToPage(clampedPage - 1)}
+            disabled={clampedPage === 1}
+          >
+            ‹ 이전
+          </button>
+
+          {getPageNumbers().map((p) => (
+            <button
+              key={p}
+              className={`page-btn number ${p === clampedPage ? "active" : ""}`}
+              onClick={() => goToPage(p)}
+            >
+              {p}
+            </button>
+          ))}
+
+          <button
+            className="page-btn"
+            onClick={() => goToPage(clampedPage + 1)}
+            disabled={clampedPage === totalPages}
+          >
+            다음 ›
+          </button>
+          <button
+            className="page-btn"
+            onClick={() => goToPage(totalPages)}
+            disabled={clampedPage === totalPages}
+          >
+            끝 »
+          </button>
+
+          <span className="page-info">
+            페이지 {clampedPage} / {totalPages} · 총 {totalCount}마리
+          </span>
+        </div>
+      )}
     </section>
   );
 }

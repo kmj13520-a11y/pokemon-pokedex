@@ -1,7 +1,8 @@
 // src/App.jsx
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { useAuth } from "./context/AuthContext";
+import FavoritesPage from "./pages/FavoritesPage";
+import MyTeamPage from "./pages/MyTeamPage";
 
 import "./App.css";
 
@@ -11,27 +12,13 @@ import Navbar from "./components/Navbar";
 // 페이지들
 import Home from "./pages/Home";
 import Pokedex from "./components/pokemon/Pokedex";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
 import PokemonListPage from "./pages/PokemonListPage";
 import PokemonDetailPage from "./pages/PokemonDetailPage";
-import MyPokemonPage from "./pages/MyPokemonPage";
 
 export default function App() {
-  const { loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="app-loading">
-        <div className="pokeball" />
-        <p>트레이너 정보를 불러오는 중...</p>
-      </div>
-    );
-  }
-
   return (
     <div className="app">
-      {/* 🔥 기존 헤더 제거하고 Navbar.jsx만 사용 */}
+      {/* 상단 네비게이션 */}
       <Navbar />
 
       <main className="app-main">
@@ -41,9 +28,9 @@ export default function App() {
             <Route path="/pokedex" element={<Pokedex />} />
             <Route path="/pokemon" element={<PokemonListPage />} />
             <Route path="/pokemon/:id" element={<PokemonDetailPage />} />
-            <Route path="/my-pokemon" element={<MyPokemonPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/favorites" element={<FavoritesPage />} />{" "}
+            <Route path="/my-team" element={<MyTeamPage />} />
+            {/* ⭐ 추가 */}
           </Routes>
         </div>
       </main>
