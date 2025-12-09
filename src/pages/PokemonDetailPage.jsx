@@ -119,22 +119,6 @@ export default function PokemonDetailPage() {
           <Link to="/pokedex" className="btn btn-outline detail-back-btn">
             ← 도감으로 돌아가기
           </Link>
-
-          {isInMyList ? (
-            <button
-              className="btn btn-primary detail-my-btn"
-              onClick={handleGoMyPokemon}
-            >
-              ⭐ 내 포켓몬 보러가기
-            </button>
-          ) : (
-            <button
-              className="btn btn-primary detail-my-btn"
-              onClick={handleAddMyPokemon}
-            >
-              + 내 포켓몬에 추가
-            </button>
-          )}
         </div>
       </header>
 
