@@ -1,16 +1,72 @@
-# React + Vite
+# 📘 포켓몬 탐험 도감 – 포켓몬 도감 서비스
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 외부 API(PokeAPI)를 활용해 세대별 포켓몬 정보를 조회하고,  
+> 나만의 즐겨찾기 & 팀을 구성할 수 있는 리액트 포트폴리오 프로젝트입니다.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧩 프로젝트 소개
 
-## React Compiler
+**포켓몬 탐험 도감**은 포켓몬 트레이너를 위한 웹 도감 서비스입니다.  
+사용자는 세대별로 포켓몬을 탐색하고, 각 포켓몬의 상세 정보(이미지, 타입, 능력치 등)를 확인할 수 있으며,  
+마음에 드는 포켓몬을 **즐겨찾기**하거나 **팀 편성** 기능을 통해 나만의 파티를 구성할 수 있습니다.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+이 프로젝트는 다음을 목표로 합니다.
 
-## Expanding the ESLint configuration
+- 외부 REST API 연동 경험 쌓기
+- React 컴포넌트 구조 설계 및 상태 관리 훈련
+- 반응형 UI/UX 및 사용자 친화적 인터페이스 구현
+- 포트폴리오용으로 바로 제출 가능한 수준의 프론트엔드 서비스 제작
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## ✨ 주요 기능
+
+- 🔍 **세대별 포켓몬 조회**
+
+  - 1세대 ~ n세대까지 세대 버튼으로 빠르게 필터링
+  - 각 세대의 포켓몬 리스트를 그리드 형태로 출력
+
+- 📇 **포켓몬 카드 리스트**
+
+  - 포켓몬 이미지, 이름, 번호, 타입 아이콘 표시
+  - 호버/애니메이션 효과로 인터랙션 강화
+
+- 📑 **포켓몬 상세 모달**
+
+  - 포켓몬의 기본 정보 (키, 몸무게, 타입 등)
+  - 능력치(Stats)를 차트/바 형태로 시각화
+  - 기술(스킬) 및 기타 부가 정보 표시
+
+- ⭐ **즐겨찾기 기능**
+
+  - 마음에 드는 포켓몬을 즐겨찾기에 추가/삭제
+  - 즐겨찾기 탭에서 모아서 확인
+
+- 🧑‍🤝‍🧑 **나만의 팀 구성**
+
+  - 최대 6마리까지 포켓몬 팀 구성
+  - 팀에서 포켓몬 교체/삭제
+  - 추후 배틀 시뮬레이터 등으로 확장 가능
+
+- 🔁 **반응형 & 직관적인 UI**
+  - 모바일/태블릿/PC 해상도 대응
+  - 세대 탭, 검색 필드, 카드 그리드 자동 정렬
+
+---
+
+## 🛠 기술 스택
+
+### Frontend
+
+- ⚛️ **React**
+- 📦 **Vite**
+- 📡 **Axios / fetch** (외부 API 호출)
+- 🌈 CSS / CSS Modules / Styled-Components (프로젝트에 맞게 기입)
+- 🔁 React Router (페이지/탭 이동)
+
+### Backend / API
+
+- 🌐 **PokeAPI**
+  - 공식 사이트: https://pokeapi.co
+  - `https://pokeapi.co/api/v2/` 엔드포인트 활용
